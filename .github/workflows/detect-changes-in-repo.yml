@@ -1,0 +1,31 @@
+name: detect changes in repo
+
+on:
+  push:
+    paths:
+      - docs/**
+      - src/**
+      - features/**
+
+jobs:
+  determine-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            docs:
+              - 'docs/**'
+            src:
+              - 'src/**'
+            features:
+              - 'src/**'
+      - run: echo "changes in doc folder"
+        if: steps.changes.outputs.docs == 'true'
+      - run: echo "changes in src folder"
+        if: steps.changes.outputs.src == 'true'
+      - run: echo "changes in features folder"
+        if: steps.changes.outputs.src == 'true'
