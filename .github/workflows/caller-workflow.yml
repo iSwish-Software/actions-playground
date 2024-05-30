@@ -1,0 +1,35 @@
+name: Call a reusable workflow and use its output
+
+# environment variables cannot be passed as input variable for a reusable workflow
+# workaround:
+#   pass the environment variable as the output of a job
+#   and pass the output of the job as input for the reusable workflow
+# documentation:
+#  Reusing workflows: https://docs.github.com/en/actions/using-workflows/reusing-workflows
+#  Issue 2372: https://github.com/actions/runner/issues/2372
+
+on:
+  workflow_dispatch:
+
+env:
+  NAME: John Doe
+
+jobs:
+  get-env-vars:
+    runs-on: ubuntu-latest
+    outputs:
+      NAME: ${{ env.NAME }}
+    steps:
+      - run: echo ${{ env.NAME }}
+
+  reusable-workflow:
+    needs: get-env-vars
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      name: ${{ needs.get-env-vars.outputs.NAME }}
+
+  get-reusable-workflow-output:
+    needs: reusable-workflow
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ needs.reusable-workflow.outputs.greeting }}
