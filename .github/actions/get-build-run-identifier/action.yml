@@ -1,0 +1,17 @@
+name: Get build run identifier
+description: Creates a build run identifier bases on date and time (<year><month><day><hour><minute>)
+
+outputs:
+  build-run:
+    description: a build run identifier based on date and time
+    value: ${{ steps.get-build-run.outputs.BUILD_RUN }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get build run identifier
+      id: get-build-run
+      run: |
+        export TZ="Europe/Amsterdam"
+        echo "BUILD_RUN=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
+      shell: bash

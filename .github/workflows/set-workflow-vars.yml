@@ -1,0 +1,25 @@
+name: set and use workflow variables
+
+# NOTE: a checkout must be performed when actions in the repo are used.
+# Otherwise you will get the message: failed to read 'action.yml' from action '<action name>' with path '' of step file does not exist
+
+on:
+  workflow_dispatch:
+
+jobs:
+  set-workflow-vars:
+    runs-on: ubuntu-latest
+    outputs:
+      BUILD_RUN: ${{ steps.get-build-run-identifier.outputs.build-run }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Get build run identifier
+        id: get-build-run-identifier
+        uses: ./.github/actions/get-build-run-identifier
+      - run: echo ${{ steps.get-build-run-identifier.outputs.build-run }}
+  job-2:
+    needs: set-workflow-vars
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job-2 ${{ needs.set-workflow-vars.outputs.BUILD_RUN }}"
