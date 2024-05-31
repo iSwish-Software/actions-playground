@@ -1,0 +1,35 @@
+name: continuous integration
+
+on:
+  push:
+
+env:
+  APP_CSPROJ: src/app/app.csproj
+
+jobs:
+  set-workflow-vars:
+    runs-on: ubuntu-latest
+    outputs:
+      BUILD_RUN: ${{ steps.get-build-run-identifier.outputs.build-run }}
+      APP_CSPROJ: ${{ env.APP_CSPROJ }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Get build run identifier
+        id: get-build-run-identifier
+        uses: ./.github/actions/get-build-run-identifier
+      - run: echo ${{ steps.get-build-run-identifier.outputs.build-run }}
+  publish:
+    needs: set-workflow-vars
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set build run in version in csproj
+        id: set-app-version
+        uses: ./.github/actions/set-version-build-run-in-csproj
+        with:
+          path-csproj-file: ${{ needs.set-workflow-vars.outputs.APP_CSPROJ }}
+          build-run: ${{ needs.set-workflow-vars.outputs.BUILD_RUN }}
+      - run: echo ${{ steps.set-app-version.outputs.version }}
+      - run: cat ${{ needs.set-workflow-vars.outputs.APP_CSPROJ }}

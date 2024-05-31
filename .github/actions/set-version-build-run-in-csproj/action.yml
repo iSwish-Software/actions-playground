@@ -1,0 +1,31 @@
+name: Set build run in csproj file
+description: Set the build run input var as version suffix in the Version element in the provided csproj file
+
+# source: https://www.jameskerr.blog/posts/sharing-steps-in-github-action-workflows/
+
+inputs:
+  path-csproj-file:
+    description: path to the csproj file
+    required: true
+  build-run:
+    description: the string that must be appended as version suffix
+    required: true
+outputs:
+  version:
+    description: the original value of the Version element 
+    value: ${{ steps.get-version.outputs.VERSION }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get version element value
+      id: get-version
+      run: |
+        echo "VERSION=$(sed -n 's/.*<Version>\([0-9.]*\).*/\1/p' ${{ inputs.path-csproj-file }})" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Append build run as version suffix
+      run: |
+        search_string="\(<Version>\([0-9.]*\)\)"
+        replace_string="<Version>${{ steps.get-version.outputs.VERSION }}+${{ inputs.build-run }}"
+        sed -i "s/$search_string/$replace_string/" ${{ inputs.path-csproj-file }}
+      shell: bash
