@@ -1,0 +1,20 @@
+name: Get build run identifier in Docker manifest
+description: Get the build run identifier from the container image in a docker manifest
+
+inputs:
+  path-docker-manifest:
+    description: the path of a docker manifest
+    required: true
+outputs:
+  build-run:
+    description: the build run identifier of the container image in a docker manifest
+    value: ${{ steps.get-build-run.outputs.BUILD_RUN }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get build run identifier
+      id: get-build-run
+      run: |
+        echo "BUILD_RUN=$(sed -n 's/image:.*:.*-\(.*\)/\1/p' ${{ inputs.path-docker-manifest }})" >> $GITHUB_OUTPUT
+      shell: bash

@@ -1,0 +1,25 @@
+name: Get version and build run from the container image in a Docker manifest
+
+on:
+  push
+
+jobs:
+  get-version-and-build-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Get version from container image in Docker manifest
+        id: get-app-version
+        uses: ./.github/actions/get-version-in-docker-manifest
+        with:
+          path-docker-manifest: .docker/historie-data-service.yml
+      - name: Get build run from container image in Docker manifest
+        id: get-build-run
+        uses: ./.github/actions/get-build-run-identifier-in-docker-manifest
+        with:
+          path-docker-manifest: .docker/historie-data-service.yml
+      - name: print version and build run
+        run: |
+          echo ${{ steps.get-app-version.outputs.version }}
+          echo ${{ steps.get-build-run.outputs.build-run }}
