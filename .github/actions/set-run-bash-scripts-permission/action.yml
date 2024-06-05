@@ -1,0 +1,13 @@
+name: Set run bash script permission
+description: Set run permission on a bash script file or all bash script files in a folder
+
+inputs:
+  path-bash-file-or-folder:
+    description: path to a bash script file or a folder with bash script files. To set run permission on all bash script files in a folder, provide the path and end it with /*
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - run: sudo chmod +x ${{ inputs.path-bash-file-or-folder }}
+      shell: bash
