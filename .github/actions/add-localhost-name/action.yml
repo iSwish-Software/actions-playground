@@ -1,0 +1,15 @@
+name: Add localhost name
+description: Adds a host name for localhost in the /etc/hosts file
+
+inputs:
+  host-name:
+    description: a name that must be assigned to localhost (127.0.0.1)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Add a host name to /etc/hosts
+      run: |
+        sudo echo '127.0.0.1 ${{ inputs.host-name }}' | sudo tee -a /etc/hosts
+      shell: bash

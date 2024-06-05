@@ -1,0 +1,16 @@
+name: add name for localhost
+
+on:
+  workflow_dispatch:
+
+jobs:
+  add-name-for-localhost:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - run: cat /etc/hosts
+      - uses: ./.github/actions/add-localhost-name
+        with:
+          host-name: identityserver
+      - run: cat /etc/hosts
