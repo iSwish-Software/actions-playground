@@ -26,8 +26,8 @@ jobs:
       - name: fake error in step
         run: exit 1
       - run: echo "changes in doc folder"
-        if: steps.changes.outputs.docs == 'true'
+        if: always() && steps.changes.outputs.docs == 'true'
       - run: echo "changes in src folder"
-        if: steps.changes.outputs.src == 'true'
+        if: always() && steps.changes.outputs.src == 'true'
       - run: echo "changes in features folder"
-        if: steps.changes.outputs.src == 'true'
+        if: always() && steps.changes.outputs.src == 'true'
