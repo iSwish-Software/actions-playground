@@ -23,6 +23,8 @@ jobs:
               - 'src/**'
             features:
               - 'src/**'
+      - name: fake error in step
+        run: exit 1
       - run: echo "changes in doc folder"
         if: steps.changes.outputs.docs == 'true'
       - run: echo "changes in src folder"
