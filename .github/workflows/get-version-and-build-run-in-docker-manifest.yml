@@ -21,5 +21,5 @@ jobs:
           path-docker-manifest: .docker/historie-data-service.yml
       - name: print version and build run
         run: |
-          echo ${{ steps.get-app-version.outputs.version }}
-          echo ${{ steps.get-build-run.outputs.build-run }}
+          echo '"${{ steps.get-app-version.outputs.version }}"'
+          echo '"${{ steps.get-build-run.outputs.build-run }}"'

@@ -31,5 +31,5 @@ jobs:
         with:
           path-csproj-file: ${{ needs.set-workflow-vars.outputs.APP_CSPROJ }}
           build-run: ${{ needs.set-workflow-vars.outputs.BUILD_RUN }}
-      - run: echo ${{ steps.set-app-version.outputs.version }}
+      - run: echo '"${{ steps.set-app-version.outputs.version }}"'
       - run: cat ${{ needs.set-workflow-vars.outputs.APP_CSPROJ }}
