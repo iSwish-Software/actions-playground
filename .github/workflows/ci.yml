@@ -23,9 +23,6 @@ jobs:
   publish:
     needs: set-workflow-vars
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -44,4 +41,4 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - run: docker image push ghcr.io/actions-playground/api:latest
+      - run: docker image push ghcr.io/iswish-software/api:latest

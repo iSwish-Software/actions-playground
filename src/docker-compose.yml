@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   api:
-    image: ghcr.io/actions-playground/api:latest
+    image: ghcr.io/iswish-software/api:latest
     build:
       context: .
       dockerfile: api/Dockerfile
