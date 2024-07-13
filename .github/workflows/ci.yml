@@ -22,6 +22,8 @@ jobs:
   publish:
     needs: set-workflow-vars
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
