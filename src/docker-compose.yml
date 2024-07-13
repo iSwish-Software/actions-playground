@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  api:
+    image: ghcr.io/actions-playground/api:latest
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+      platforms:
+        - linux/arm64
