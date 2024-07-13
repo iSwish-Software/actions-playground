@@ -2,6 +2,7 @@ name: continuous integration
 
 on:
   push:
+  workflow_dispatch:
 
 env:
   APP_CSPROJ: src/api/api.csproj
