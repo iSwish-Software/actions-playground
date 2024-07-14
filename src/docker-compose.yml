@@ -8,3 +8,4 @@ services:
       dockerfile: api/Dockerfile
       platforms:
         - linux/arm64
+        - linux/amd64
