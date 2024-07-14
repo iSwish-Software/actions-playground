@@ -1,11 +1,18 @@
 version: '3.4'
 
 services:
-  api:
-    image: ghcr.io/iswish-software/api:latest
+  api-amd64:
+    image: ghcr.io/iswish-software/api-amd64:latest
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+      platforms:
+        - linux/amd64
+
+  api-arm64:
+    image: ghcr.io/iswish-software/api-arm64:latest
     build:
       context: .
       dockerfile: api/Dockerfile
       platforms:
         - linux/arm64
-        - linux/amd64
