@@ -51,3 +51,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: docker image push ghcr.io/iswish-software/api-amd64:latest
       - run: docker image push ghcr.io/iswish-software/api-arm64:latest
+      - run: docker image push ghcr.io/iswish-software/api-multi-platform:latest

@@ -16,3 +16,12 @@ services:
       dockerfile: api/Dockerfile
       platforms:
         - linux/arm64
+
+  api-multi-platform:
+    image: ghcr.io/iswish-software/api-multi-platform:latest
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+      platforms:
+        - linux/amd64
+        - linux/arm64
