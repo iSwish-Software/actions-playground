@@ -61,7 +61,7 @@ jobs:
           file: src/api/Dockerfile
           context: src
           push: true
-          tags: ghcr.io/iswish-software/api-multiplatform:latest
+          tags: ghcr.io/iswish-software/api-multiplatform-2:latest
           platforms: linux/arm64,linux/amd64
       # - run: docker compose -f src/docker-compose.yml build
       # - run: docker compose -f src/docker-compose.yml push
