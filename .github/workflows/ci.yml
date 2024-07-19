@@ -51,7 +51,6 @@ jobs:
           context: src
           load: true
           tags: ghcr.io/iswish-software/api-multiplatform:latest
-          platforms: linux/arm64,linux/amd64
       - run: docker compose -f src/docker-compose.yml up -d
       - run: sleep 5s
         shell: bash
