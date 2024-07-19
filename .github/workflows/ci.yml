@@ -47,7 +47,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: src
+          context: src/api
           push: true
           tags: ghcr.io/iswish-software/api-multiplatform-latest
           platforms: linux/arm64,linux/amd64
