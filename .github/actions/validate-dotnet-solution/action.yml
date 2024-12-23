@@ -30,7 +30,7 @@ runs:
     - name: Create code coverage reports & publish as step summary
       run: |
         sh ./scripts/dotnet-create-coverage-reports.sh
-        cat ./test-reports/coverage/reports/summary.md >> $GITHUB_STEP_SUMMARY
+        cat ./test-reports/coverage/reports/Summary.md >> $GITHUB_STEP_SUMMARY
       shell: bash
 
     - name: Upload code coverage reports
