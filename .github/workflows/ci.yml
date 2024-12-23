@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 
 env:
+  APP_SLN: src/actions-playground.sln
   APP_CSPROJ: src/api/api.csproj
 
 jobs:
@@ -20,6 +21,17 @@ jobs:
         id: get-build-run-identifier
         uses: ./.github/actions/get-build-run-identifier
       - run: echo ${{ steps.get-build-run-identifier.outputs.build-run }}
+
+  validate-dotnet-solution:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Validate .NET solution
+        uses: ./.github/actions/validate-dotnet-solution
+        with:
+          path-solution-file: ${{ env.APP_SLN }}
+
   publish:
     needs: set-workflow-vars
     runs-on: ubuntu-latest

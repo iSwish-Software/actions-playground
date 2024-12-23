@@ -9,3 +9,5 @@ c*.suo
 [Oo]bj/
 
 .vs/
+ 
+test-reports/
