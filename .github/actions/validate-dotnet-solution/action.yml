@@ -1,0 +1,40 @@
+name: Validate .NET Solution
+description: Build projects, run unit tests, and publish code coverage to the job summary page for a .NET solution.
+
+inputs:
+  path-solution-file:
+    description: 'The path to a .NET solution file.'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.x.x
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ inputs.path-solution-file }}
+      shell: bash
+
+    - name: Build projects
+      run: dotnet build ${{ inputs.path-solution-file }} --configuration Release --no-restore
+      shell: bash
+
+    - name: Run unit tests
+      run: dotnet test ${{ inputs.path-solution-file }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./test-reports/coverage
+      shell: bash
+
+    - name: Create code coverage reports & publish as step summary
+      run: |
+        sh ./scripts/dotnet-create-coverage-reports.sh
+        cat ./test-reports/coverage/reports/summary.md >> $GITHUB_STEP_SUMMARY
+      shell: bash
+
+    - name: Upload code coverage reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-reports
+        path: ./test-reports/coverage/reports
